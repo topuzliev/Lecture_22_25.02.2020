@@ -57,6 +57,12 @@ node('dockerslave1'){
         } 
     }
 
+stage('Push image') {
+    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+      dockerImage.push()
+    }
+  }
+/*
     stage('Push Image'){
        withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
             withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker', url: 'https://index.docker.io/v1/'){
@@ -64,5 +70,5 @@ node('dockerslave1'){
                 sh "docker push topuzliev/myappdocker:latest"
             }
         }
-    }
+    }*/
 }
