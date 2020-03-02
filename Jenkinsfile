@@ -54,8 +54,9 @@ node('dockerslave1'){
             dockerImage = docker.build("topuzliev/myappdocker:latest", "--no-cache --build-arg APP_NAME=${appName} --build-arg APP_VERSION=${appVersion} .")
   //          sh "docker build --no-cache --build-arg APP_NAME=${appName} --build-arg APP_VERSION=${appVersion} -t myappdocker ."
   //          sh "docker images"
+  withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker', url: 'https://index.docker.io/v1/'){
   dockerImage.push()
-        } 
+        } }
     }
 
 /*stage('Push image') {
