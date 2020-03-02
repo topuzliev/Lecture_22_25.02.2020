@@ -48,7 +48,7 @@ node('dockerslave1'){
     stage('Unstash Our Application'){
         unstash 'artifactStash'
     } 
-   stages(){         
+           
     stage('Build Dockerfile'){
         withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
             dockerImage = docker.build("topuzliev/myappdocker:latest", "--no-cache --build-arg APP_NAME=${appName} --build-arg APP_VERSION=${appVersion} .")
@@ -63,14 +63,14 @@ node('dockerslave1'){
 stage('Push image') {
     withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
     script {
-    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'/*, toolName: 'Docker'*/) {
-      
+//    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'/*, toolName: 'Docker'*/) {
+    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker', url: 'https://index.docker.io/v1/'){  
           dockerImage.push()
           }
     }
   }
 }
-   }
+   
 /*
     stage('Push Image'){
        withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
