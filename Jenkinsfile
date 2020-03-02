@@ -42,7 +42,7 @@ node('dockerslave1'){
     }    
 
     stage('Get Dockerfile'){
-        git(url: 'git@github.com:topuzliev/Lecture_22.git', branch: "master", credentialsId: 'Privet')
+        git(url: 'git@github.com:topuzliev/Lecture_22_25.02.2020.git', branch: "master", credentialsId: 'Privet')
     } 
 
     stage('Unstash Our Application'){
@@ -51,6 +51,7 @@ node('dockerslave1'){
             
     stage('Build Dockerfile'){
         withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
+            dockerImage = docker.build("topuzliev/myappdocker:latest")
   //          sh "docker build --no-cache --build-arg APP_NAME=${appName} --build-arg APP_VERSION=${appVersion} -t myappdocker ."
   //          sh "docker images"
         } 
