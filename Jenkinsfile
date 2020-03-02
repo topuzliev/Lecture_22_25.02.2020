@@ -32,6 +32,7 @@ node('dockerslave'){
 
 node('dockerslave1'){
     tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+    def dockerImage =''
     
     stage('Check Prerequest'){
             echo "${tool 'Docker'}"
