@@ -52,22 +52,17 @@ node('dockerslave1'){
     stage('Build Dockerfile'){
         withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
             dockerImage = docker.build("topuzliev/myappdocker:latest", "--no-cache --build-arg APP_NAME=${appName} --build-arg APP_VERSION=${appVersion} .")
-  //          sh "docker build --no-cache --build-arg APP_NAME=${appName} --build-arg APP_VERSION=${appVersion} -t myappdocker ."
-  //          sh "docker images"
-  //withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker', url: 'https://index.docker.io/v1/'){
-  //dockerImage.push()
-  //      } 
         }
     }
 
-stage('Push image') {
-    withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
-    script {
+    stage('Push image') {
+        withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
+//    script {
 //    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'/*, toolName: 'Docker'*/) {
     withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker', url: 'https://index.docker.io/v1/'){  
           dockerImage.push()
           }
-    }
+//    }
   }
 }
    
