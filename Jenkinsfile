@@ -58,10 +58,12 @@ node('dockerslave1'){
     }
 
 stage('Push image') {
+    withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
       dockerImage.push()
     }
   }
+}
 /*
     stage('Push Image'){
        withEnv(["PATH=${env.PATH}:${tool 'Docker'}/bin"]){
